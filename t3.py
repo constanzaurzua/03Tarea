@@ -1,13 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import ode
-from mpl_toolkits.mplot3d import Axes3D
+
 #---------------------
 #     parte 1
 #---------------------
 
 
 e=1.487
+
+
+'''Lo primero es definirse a traves de funciones la obtencion
+de k1 k2 y k3 para luego obtener yn+1'''
 def f(y, v,eta=e):
     return v, -y-eta*(y**2-1)*v
 
@@ -35,75 +38,62 @@ def rk3_step(y_n, v_n, h, f):
     return y_n1, v_n1
 
 
+'''Nos definimos el largo de pasos para asi obtener el
+tamano de y dy/ds = v'''
+
 N_steps = 40000
 h = 20*np.pi / N_steps
 y= np.zeros(N_steps)
 v = np.zeros(N_steps)
-
+y2= np.zeros(N_steps)
+v2= np.zeros(N_steps)
 
 y[0] = 0.1
 v[0] = 0
 for i in range(1, N_steps):
     y[i], v[i] = rk3_step(y[i-1], v[i-1], h, f)
 
-
+'''Ploteamos'''
 
 t_rk= [h * i for i in range(N_steps)]
 plt.figure(1)
-plt.plot(y, v, 'g')
+plt.figure(1).clf()
+plt.plot(y, v, 'g', label = "$\ Condiciones \ iniciales \ y(s)=0.1 \; \ dy/ds=0$")
+plt.legend()
+plt.title("$ \ y(s) \ vs \ dy/ds$")
+plt.xlabel('$y(s)$')
+plt.ylabel('$dy/ds$')
+plt.savefig("fig1.png")
 plt.show()
-plt.figure (2)
-plt.plot(t_rk,y)
+
+plt.figure(2)
+plt.figure(2).clf()
+
+y2[0]=4
+v2[0]=0
+for i in range(1,N_steps):
+    y2[i],v2[i]= rk3_step(y2[i-1], v2[i-1], h, f)
+
+plt.plot(y2,v2,'r', label = "$\ Condiciones \ iniciales \ y(s)=4 \ ; \ dy/ds=0$")
+plt.legend()
+plt.title("$ \ y(s) \ vs \ dy/ds$", fontsize=20)
+plt.xlabel('$y(s)$',fontsize=20)
+plt.ylabel('$dy/ds$',fontsize=20)
+plt.savefig("fig2.png")
 plt.show()
 
 plt.figure(3)
+plt.figure(3).clf()
 
-y[0]=4
-v[0]=0
-for i in range(1,N_steps):
-    y[i],v[i]= rk3_step(y[i-1], v[i-1], h, f)
+plt.plot(t_rk,y2,'r',label = " $\ Condiciones \ iniciales \ y(s)=4 \ dy/ds= 0$")
 
-plt.plot(y,v,'r')
-plt.show()
+plt.legend()
+plt.plot(t_rk,y,'b', label =" $\ Condiciones \ iniciales \ y(s)=0.1 \ dy/ds= 0$")
+plt.legend()
+#plt.xlabel('$y(s)$')
+plt.title(" $ \ y \ vs \ s$",fontsize=20)
+plt.ylabel('$y(s)$',fontsize=20)
+plt.xlabel("$s$",fontsize=20)
+plt.savefig("fig3.png")
 
-#---------------------
-#     parte 2
-#---------------------
-
-def lorenz(t,A):
-    x,y,z=A
-    return si*(A[1]-A[0]), A[0]*(rho-A[2])-A[1],A[0]*A[1]-beta*A[2]
-
-si=10
-rho=28
-beta=8/3
-
-t0=1e-3
-ci=[1,1,1]#condiciones iniciales de x y z
-
-r = ode(lorenz)
-r.set_integrator('dopri5')
-r.set_initial_value(t0,ci)
-
-#t=1000
-t = np.arange(0, 15 * np.pi, 0.01)
-t_values = np.linspace(t0, 2 * np.pi, 1000)
-x_values = np.zeros(len(t))
-y_values = np.zeros(len(t))
-z_values = np.zeros(len(t))
-
-for i in range(len(t_values)):
-    r.integrate(t_values[i])
-    x_values[i], y_values[i] , z_values[i]= r.y
-
-fig = plt.figure(4)
-
-ax = fig.add_subplot(111, projection='3d')
-ax.set_aspect('equal')
-
-x=x_values
-y=y_values
-z=z_values
-
-ax.plot(x,y,z)
 plt.show()
