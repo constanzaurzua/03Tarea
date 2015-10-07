@@ -58,11 +58,11 @@ for i in range(1, N_steps):
 t_rk= [h * i for i in range(N_steps)]
 plt.figure(1)
 plt.figure(1).clf()
-plt.plot(y, v, 'g', label = "$\ Condiciones \ iniciales \ y(s)=0.1 \; \ dy/ds=0$")
-plt.legend()
-plt.title("$ \ y(s) \ vs \ dy/ds$")
-plt.xlabel('$y(s)$')
-plt.ylabel('$dy/ds$')
+plt.plot(y, v, 'g')
+#plt.legend()
+plt.title("$ \ Condiciones \ iniciales \ y(s)=0.1 \; \ dy/ds=0$", fontsize=15)
+plt.xlabel('$y(s)$',fontsize=15)
+plt.ylabel('$dy/ds$',fontsize=15)
 plt.savefig("fig1.png")
 plt.show()
 
@@ -74,26 +74,24 @@ v2[0]=0
 for i in range(1,N_steps):
     y2[i],v2[i]= rk3_step(y2[i-1], v2[i-1], h, f)
 
-plt.plot(y2,v2,'r', label = "$\ Condiciones \ iniciales \ y(s)=4 \ ; \ dy/ds=0$")
-plt.legend()
-plt.title("$ \ y(s) \ vs \ dy/ds$", fontsize=20)
-plt.xlabel('$y(s)$',fontsize=20)
-plt.ylabel('$dy/ds$',fontsize=20)
+plt.plot(y2,v2,'r')
+#plt.legend()
+plt.title("$ \ Condiciones \ iniciales \ y(s)=4 \ ; \ dy/ds=0$ ", fontsize=15)
+plt.xlabel('$y(s)$',fontsize=15)
+plt.ylabel('$dy/ds$',fontsize=15)
 plt.savefig("fig2.png")
 plt.show()
 
 plt.figure(3)
 plt.figure(3).clf()
 
-plt.plot(t_rk,y2,'r',label = " $\ Condiciones \ iniciales \ y(s)=4 \ dy/ds= 0$")
-
+plt.plot(t_rk,y2,'r', label= "$ \ condiciones \ iniciales \ y(s)=4 \ ; \ dy/ds=0$")
 plt.legend()
-plt.plot(t_rk,y,'b', label =" $\ Condiciones \ iniciales \ y(s)=0.1 \ dy/ds= 0$")
+plt.plot(t_rk,y,'b', label = "$ \ condiciones \ iniciales \ y(s)=0.1 \ ; \ dy/ds=0$")
 plt.legend()
-#plt.xlabel('$y(s)$')
-plt.title(" $ \ y \ vs \ s$",fontsize=20)
-plt.ylabel('$y(s)$',fontsize=20)
-plt.xlabel("$s$",fontsize=20)
+plt.title(" $ \ Y \ vs \ S$",fontsize=15)
+plt.ylabel('$y(s)$',fontsize=15)
+plt.xlabel("$s$",fontsize=15)
 plt.savefig("fig3.png")
 
 plt.show()
