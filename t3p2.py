@@ -34,8 +34,12 @@ fig = plt.figure(4)
 ax = fig.add_subplot(111, projection='3d')
 ax.set_aspect('equal')
 
-plt.title("$ \ Atrator \ de \ Lorenz$",fontsize=25)
+plt.title("$ \ Atractor \ de \ Lorenz$",fontsize=25)
 
-ax.plot(x,y,z)
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+
+ax.plot(x,y,z,'g')
 plt.savefig("fig4.png")
 plt.show()
